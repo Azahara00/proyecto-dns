@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNS: de una dirección web a su IP</title>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,sans-serif;background:#f5f9fd;color:#24384b;line-height:1.6}
+header{background:linear-gradient(135deg,#dff3ff,#eef0ff);text-align:center;padding:65px 20px}
+header h1{color:#15537f;font-size:clamp(2.3rem,6vw,4.5rem);margin:10px 0}
+header p{max-width:760px;margin:auto;font-size:1.15rem}
+.question{max-width:850px;margin:28px auto 0;background:white;padding:22px;border-radius:18px;font-size:1.2rem;font-weight:bold;box-shadow:0 8px 25px #789ab522}
+nav{position:sticky;top:0;background:white;border-bottom:1px solid #d9e5ee;padding:10px;text-align:center;z-index:10}
+nav a{color:#15537f;text-decoration:none;font-weight:bold;margin:4px 8px;display:inline-block}
+main{max-width:1050px;margin:auto;padding:45px 20px}
+section{margin-bottom:65px}
+h2{color:#15537f;font-size:2rem}
+.card{background:white;border-radius:18px;padding:24px;margin-top:18px;box-shadow:0 7px 25px #789ab522;border:1px solid #dfebf3}
+.badge{display:inline-flex;width:42px;height:42px;border-radius:50%;background:#dcefff;color:#15537f;align-items:center;justify-content:center;font-weight:bold;font-size:1.2rem}
+.flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin:28px 0}
+.box{background:white;border:2px solid #bdd8eb;border-radius:15px;padding:18px 13px;text-align:center;width:155px;min-height:110px;font-weight:bold}
+.box .emoji{font-size:2rem;display:block}
+.arrow{font-size:2rem;color:#367aa5}
+.note{background:#eaf6ff;border-left:6px solid #367aa5;padding:17px;border-radius:10px;margin-top:20px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+footer{background:#24384b;color:white;text-align:center;padding:30px}
+@media(max-width:650px){.two{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}}
+</style>
+</head>
+<body>
+
+<header id="inicio">
+<div style="font-size:2.2rem">🌐 💻 🔎</div>
+<h1>DNS: de una dirección web a su IP</h1>
+<p>Una explicación visual de lo que ocurre desde que escribimos una dirección web hasta que nuestro ordenador encuentra su IP.</p>
+<div class="question">
+¿Qué ocurre desde que escribo una dirección web hasta que mi ordenador encuentra su IP?
+</div>
+</header>
+
+<nav>
+<a href="#paso1">1. ¿Qué es DNS?</a>
+<a href="#paso2">2. ¿Por qué nombres?</a>
+<a href="#paso3">3. Recorrido</a>
+<a href="#paso4">4. ¿Qué pasa con la IP?</a>
+<a href="#paso5">5. Caché y TTL</a>
+<a href="#paso6">6. Una o varias IP</a>
+</nav>
+
+<main>
+
+<section id="paso1">
+<span class="badge">1</span>
+<h2>¿Qué es DNS y para qué sirve?</h2>
+<div class="card">
+<p><strong>DNS</strong> significa <em>Domain Name System</em> (Sistema de Nombres de Dominio).</p>
+<p>Es el sistema que permite <strong>relacionar el nombre de una página web con su dirección IP</strong>.</p>
+<p>Su función es hacer de intermediario: nosotros utilizamos nombres fáciles de recordar y el ordenador obtiene la IP que necesita para localizar el servidor.</p>
+</div>
+<div class="note">💡 <strong>Idea clave:</strong> DNS funciona como una especie de agenda de Internet: buscas un nombre y obtienes la dirección que le corresponde.</div>
+</section>
+
+<section id="paso2">
+<span class="badge">2</span>
+<h2>¿Por qué usamos nombres como wikipedia.org y no una IP?</h2>
+<div class="card">
+<p>Las personas podemos recordar fácilmente nombres como <strong>wikipedia.org</strong>, pero sería mucho más difícil memorizar las direcciones IP de todas las páginas que visitamos.</p>
+<p>Por eso escribimos un <strong>nombre de dominio</strong>. Después, DNS se encarga de encontrar la IP correspondiente.</p>
+</div>
+<div class="flow">
+<div class="box"><span class="emoji">👤</span>Nosotros<br><strong>wikipedia.org</strong></div>
+<div class="arrow">→</div>
+<div class="box"><span class="emoji">🔎</span>DNS<br>busca la IP</div>
+<div class="arrow">→</div>
+<div class="box"><span class="emoji">🔢</span>Ordenador<br>obtiene la IP</div>
+</div>
+</section>
+
+<section id="paso3">
+<span class="badge">3</span>
+<h2>¿Cuál es el recorrido para encontrar la IP de una web?</h2>
+<div class="card">
+<p>Cuando escribimos una dirección web, el ordenador necesita averiguar qué IP corresponde a ese nombre. Simplificando, el proceso es:</p>
+</div>
+<div class="flow">
+<div class="box"><span class="emoji">💻</span><strong>1. Ordenador</strong><br>Escribes la dirección web</div>
+<div class="arrow">→</div>
+<div class="box"><span class="emoji">💾</span><strong>2. Caché</strong><br>Comprueba si ya conoce la respuesta</div>
+<div class="arrow">→</div>
+<div class="box"><span class="emoji">📡</span><strong>3. Servidor DNS</strong><br>Realiza la consulta</div>
+<div class="arrow">→</div>
+<div class="box"><span class="emoji">🌍</span><strong>4. DNS</strong><br>Busca la IP</div>
+<div class="arrow">→</div>
+<div class="box"><span class="emoji">🔢</span><strong>5. Respuesta</strong><br>Devuelve la IP</div>
+</div>
+<div class="note">
+<strong>Ejemplo:</strong> escribimos <strong>www.ejemplo.com</strong> → se consulta DNS → DNS encuentra la IP → la IP vuelve a nuestro ordenador.
+</div>
+</section>
+
+<section id="paso4">
+<span class="badge">4</span>
+<h2>¿Qué ocurre cuando finalmente se obtiene esa IP?</h2>
+<div class="card">
+<p>Cuando el ordenador recibe la IP, ya sabe <strong>qué servidor debe localizar</strong>.</p>
+<p>El navegador puede entonces comunicarse con ese servidor, pedir los archivos de la página y recibirlos para mostrar la web en pantalla.</p>
+</div>
+<div class="flow">
+<div class="box"><span class="emoji">💻</span>Ordenador</div>
+<div class="arrow">→</div>
+<div class="box"><span class="emoji">🔢</span>IP encontrada</div>
+<div class="arrow">→</div>
+<div class="box"><span class="emoji">🖥️</span>Servidor web</div>
+<div class="arrow">→</div>
+<div class="box"><span class="emoji">🌐</span>Página cargada</div>
+</div>
+</section>
+
+<section id="paso5">
+<span class="badge">5</span>
+<h2>¿Qué es la caché DNS y qué significa TTL?</h2>
+<div class="two">
+<div class="card">
+<h3>💾 Caché DNS</h3>
+<p>Es una memoria temporal que guarda respuestas DNS que ya se han consultado.</p>
+<p>Así, si volvemos a pedir la misma dirección, puede que el ordenador ya tenga guardada su IP y no necesite hacer toda la consulta otra vez.</p>
+</div>
+<div class="card">
+<h3>⏱️ TTL</h3>
+<p><strong>TTL</strong> significa <em>Time To Live</em> (tiempo de vida).</p>
+<p>Indica cuánto tiempo puede mantenerse una respuesta DNS en la caché antes de que tenga que actualizarse o volver a consultarse.</p>
+</div>
+</div>
+</section>
+
+<section id="paso6">
+<span class="badge">6</span>
+<h2>¿Una web puede tener una o varias IP?</h2>
+<div class="card">
+<p><strong>Sí, una misma web puede tener varias direcciones IP.</strong></p>
+<p>Esto permite, entre otras cosas, repartir las peticiones entre distintos servidores y ayudar a gestionar muchas visitas.</p>
+</div>
+<div class="flow">
+<div class="box"><span class="emoji">🌐</span><strong>Una web</strong></div>
+<div class="arrow">→</div>
+<div class="box"><span class="emoji">🔢</span>IP 1</div>
+<div class="arrow">+</div>
+<div class="box"><span class="emoji">🔢</span>IP 2</div>
+<div class="arrow">+</div>
+<div class="box"><span class="emoji">🔢</span>IP 3</div>
+</div>
+</section>
+
+<section>
+<h2>🎯 La respuesta a la pregunta principal</h2>
+<div class="card">
+<p>Cuando escribimos una dirección web, <strong>DNS busca qué dirección IP corresponde a ese nombre</strong>. Primero puede comprobar la caché; si no tiene una respuesta válida, realiza una consulta DNS. Cuando obtiene la IP, el navegador puede contactar con el servidor y cargar la página.</p>
+<p><strong>En resumen:</strong> nombre web → DNS → IP → servidor → página web.</p>
+</div>
+<p><a href="#inicio">↑ Volver al inicio</a></p>
+</section>
+
+</main>
+<footer>
+<p><strong>Proyecto DNS · 4º ESO</strong></p>
+<p>Los 6 puntos de la ficha, explicados paso a paso.</p>
+</footer>
+</body>
+</html>
